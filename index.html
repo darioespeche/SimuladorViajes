@@ -4,22 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Vinculación del CSS y Bootstrap -->
-    <link rel="stylesheet" href="style.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="css/style.css" />
     <title>Simulador de Planificación de Viajes</title>
   </head>
   <body>
     <!-- Capa de fondo para mejorar la legibilidad -->
     <div class="overlay"></div>
-
+    <div
+      id="toastContainer"
+      class="position-fixed top-0 end-0 p-3"
+      style="z-index: 9999"
+    ></div>
     <div class="container mt-5">
       <!-- Título principal -->
-
       <div class="header-title text-center mb-4">
-        <h1>Simulador de Planificación de Viajes</h1>
+        <h1>Planifica tu viaje!</h1>
       </div>
 
       <!-- Tarjeta que contiene el formulario -->
@@ -27,33 +30,77 @@
         <div class="card-header">Ingresa los datos de tu viaje</div>
         <div class="card-body">
           <form id="formViaje">
-            <!-- Lugar de origen -->
-          <div class="mb-3">
-  <label for="origen" class="form-label">Lugar de origen</label>
-  <input type="text" class="form-control" id="origen" placeholder="Ingresa tu origen" required>
-  <div class="invalid-feedback">
-    Por favor, ingresa un lugar de origen.
-  </div>
-</div>
-
-<!-- Destino -->
-<div class="mb-3">
-  <label for="destino" class="form-label">Destino</label>
-  <select class="form-select" id="destino" required>
-    <option value="">Selecciona un destino</option>
-    <option value="0">París</option>
-    <option value="1">Tokio</option>
-    <option value="2">Nueva York</option>
-    <option value="3">Río de Janeiro</option>
-  </select>
-  <div class="invalid-feedback">
-    Por favor, selecciona un destino.
-  </div>
-</div>
-
+            <!-- Selección de Origen -->
+            <div class="mb-3">
+              <label for="origen" class="form-label">Origen</label>
+              <select class="form-select" id="origen" required>
+                <option value="">Selecciona un origen</option>
+                <option value="0">Córdoba</option>
+                <option value="1">Buenos Aires</option>
+                <option value="2">Montevideo</option>
+                <option value="3">Santiago de Chile</option>
+                <option value="4">Río de Janeiro</option>
+                <option value="5">Asuncion</option>
+              </select>
+              <div class="invalid-feedback">
+                Por favor, selecciona un origen.
+              </div>
             </div>
+
+            <!-- Selección de Destino -->
+            <div class="mb-3">
+              <label for="destino" class="form-label">Destino</label>
+              <select class="form-select" id="destino" required>
+                <option value="">Selecciona un destino</option>
+                <option value="0">París</option>
+                <option value="1">Tokio</option>
+                <option value="2">Nueva York</option>
+                <option value="3">Río de Janeiro</option>
+                <option value="4">Londres</option>
+                <option value="5">Cancun</option>
+                <option value="6">El Cairo</option>
+                <option value="7">Berlin</option>
+                <option value="8">Sidney</option>
+              </select>
+              <div class="invalid-feedback">
+                Por favor, selecciona un destino.
+              </div>
+            </div>
+
+            <!-- Fecha de Salida -->
+            <div class="mb-3">
+              <label for="fechaSalida" class="form-label"
+                >Fecha de salida</label
+              >
+              <input
+                type="date"
+                class="form-control"
+                id="fechaSalida"
+                required
+              />
+              <div class="invalid-feedback">
+                Por favor, selecciona una fecha de salida.
+              </div>
+            </div>
+
+            <!-- Fecha de Regreso -->
+            <div class="mb-3">
+              <label for="fechaRegreso" class="form-label"
+                >Fecha de regreso</label
+              >
+              <input
+                type="date"
+                class="form-control"
+                id="fechaRegreso"
+                required
+              />
+              <div class="invalid-feedback">
+                Por favor, selecciona una fecha de regreso.
+              </div>
+            </div>
+
             <!-- Botón para enviar el formulario -->
-            <button type="submit" class="btn btn-success w-100">
+            <button type="submit" class="btn btn-calculate w-100">
               Calcular Viaje
             </button>
           </form>
@@ -74,8 +121,115 @@
         </button>
       </div>
     </div>
-
+    <!-- Sección de Promociones -->
+    <div class="container mt-5">
+      <div class="text-center">
+        <h2 class="promotions-title-bg">¡¡Promociones!!</h2>
+      </div>
+      <div class="row">
+        <!-- Tarjeta de promoción 1 -->
+        <div class="col-md-4 mb-3">
+          <div class="card">
+            <img src="img/cancun.jpg" class="card-img-top" alt="Cancun" />
+            <div class="card-body">
+              <h5 class="card-title">Córdoba - Cancun</h5>
+              <p class="card-text">Precio: $900</p>
+              <p class="card-text">Del 8 de junio al 17 de junio</p>
+              <!-- Botón para añadir al carrito -->
+              <button class="btn btn-primary btn-add-cart" data-promo-id="1">
+                Añadir al Carrito
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Tarjeta de promoción 2 -->
+        <div class="col-md-4 mb-3">
+          <div class="card">
+            <img src="img/paris.jpg" class="card-img-top" alt="Paris" />
+            <div class="card-body">
+              <h5 class="card-title">Buenos Aires - París</h5>
+              <p class="card-text">Precio: $1100</p>
+              <p class="card-text">Del 10 de julio al 20 de julio</p>
+              <!-- Botón para añadir al carrito -->
+              <button class="btn btn-primary btn-add-cart" data-promo-id="2">
+                Añadir al Carrito
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Tarjeta de promoción 3 -->
+        <div class="col-md-4 mb-3">
+          <div class="card">
+            <img src="img/tokio.jpg" class="card-img-top" alt="Tokio" />
+            <div class="card-body">
+              <h5 class="card-title">Santiago de Chile - Tokio</h5>
+              <p class="card-text">Precio: $1300</p>
+              <p class="card-text">Del 1 de agosto al 15 de agosto</p>
+              <!-- Botón para añadir al carrito -->
+              <button class="btn btn-primary btn-add-cart" data-promo-id="3">
+                Añadir al Carrito
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Tarjeta de promoción 4 -->
+        <div class="col-md-4 mb-3">
+          <div class="card">
+            <img src="img/berlin.jpg" class="card-img-top" alt="Berlin" />
+            <div class="card-body">
+              <h5 class="card-title">Montevideo - Berlin</h5>
+              <p class="card-text">Precio: $1200</p>
+              <p class="card-text">Del 23 de agosto al 30 de agosto</p>
+              <!-- Botón para añadir al carrito -->
+              <button class="btn btn-primary btn-add-cart" data-promo-id="4">
+                Añadir al Carrito
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Tarjeta de promoción 5 -->
+        <div class="col-md-4 mb-3">
+          <div class="card">
+            <img src="img/newyork.jpg" class="card-img-top" alt="Nueva York" />
+            <div class="card-body">
+              <h5 class="card-title">Asuncion - Nueva York</h5>
+              <p class="card-text">Precio: $800</p>
+              <p class="card-text">Del 1 de septiembre al 15 de septiembre</p>
+              <!-- Botón para añadir al carrito -->
+              <button class="btn btn-primary btn-add-cart" data-promo-id="5">
+                Añadir al Carrito
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Tarjeta de promoción 6 -->
+        <div class="col-md-4 mb-3">
+          <div class="card">
+            <img src="img/londres.jpg" class="card-img-top" alt="Londres" />
+            <div class="card-body">
+              <h5 class="card-title">Rio de Janeiro - Londres</h5>
+              <p class="card-text">Precio: $700</p>
+              <p class="card-text">Del 2 de abril al 15 de abril</p>
+              <!-- Botón para añadir al carrito -->
+              <button class="btn btn-primary btn-add-cart" data-promo-id="6">
+                Añadir al Carrito
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-4 text-center">
+      <button id="btnVerCarrito" class="btn btn-secondary">Ver Carrito</button>
+    </div>
+    <div
+      id="carritoContainer"
+      class="mt-3 mx-auto"
+      style="max-width: 500px"
+    ></div>
     <!-- Vinculación del archivo JS -->
-    <script src="app.js"></script>
+    <script src="js/app.js"></script>
+    <!-- Carga del JS de promociones y carrito -->
+    <script src="js/promos.js"></script>
   </body>
 </html>
